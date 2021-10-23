@@ -1,0 +1,6 @@
+source:
+  type: my-source.custom_ingestion_source.MyCustomSource
+  config:
+    env: "DEV"
+sink:
+  type: "console"

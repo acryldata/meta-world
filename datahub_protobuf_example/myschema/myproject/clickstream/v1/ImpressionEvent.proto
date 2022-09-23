@@ -1,0 +1,46 @@
+syntax = "proto3";
+package myproject.clickstream.v1;
+
+import "mycompany/mymetadata/v1/meta.proto";
+import "google/protobuf/timestamp.proto";
+
+/**
+  Clickstream impressions
+**/
+message Impression {
+  option deprecated = true;
+  option(mycompany.mymetadata.v1.lifecycle.deprecation_note) = "Impression events are deprecated.";
+  option(mycompany.mymetadata.v1.lifecycle.deprecation_time) = 1649693315;
+
+  option(mycompany.mymetadata.v1.message.type) = EVENT;
+  option(mycompany.mymetadata.v1.kafka.topics) = "clickstream_impressions";
+
+  option(mycompany.mymetadata.v1.props.prop1) = "prop1 value";
+  option(mycompany.mymetadata.v1.props.prop2) = true;
+  option(mycompany.mymetadata.v1.props.prop3) = EVENT;
+
+  option(mycompany.mymetadata.v1.props.prop4) = "value1";
+  option(mycompany.mymetadata.v1.props.prop4) = "value2";
+  option(mycompany.mymetadata.v1.props.prop6) = EVENT;
+  option(mycompany.mymetadata.v1.props.prop6) = IMPRESSION;
+
+  option(mycompany.mymetadata.v1.tags.tag_str) = "value1";
+  option(mycompany.mymetadata.v1.tags.tag_bool) = true;
+  // option(mycompany.mymetadata.v1.tags.tag_enum) = EVENT;
+  option(mycompany.mymetadata.v1.tags.tag_list) = "a, b, c";
+
+  option(mycompany.mymetadata.v1.security.classification_enum) = HighlyConfidential;
+  option(mycompany.mymetadata.v1.security.classification)      = "Classification.Sensitive";
+
+  google.protobuf.Timestamp timestamp = 1; // event timestamp
+  string details = 2
+  [(mycompany.mymetadata.v1.fieldTags.tag_str) = "value1",
+   (mycompany.mymetadata.v1.fieldTags.tag_bool) = true,
+   (mycompany.mymetadata.v1.fieldTags.tag_enum) = EVENT,
+   (mycompany.mymetadata.v1.fieldTags.tag_list) = "a, b, c",
+   (mycompany.mymetadata.v1.securityField.classification_enum) = HighlyConfidential,
+   (mycompany.mymetadata.v1.securityField.classification) = "Classification.Sensitive"
+  ]; // event details
+
+  string deprecated_field = 3 [deprecated = true];
+}

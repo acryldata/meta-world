@@ -1,0 +1,39 @@
+syntax = "proto3";
+package myproject.clickstream.v1;
+
+import "mycompany/mymetadata/v1/meta.proto";
+import "myproject/clickstream/v1/ClickEvent.proto";
+import "myproject/clickstream/v1/SearchEvent.proto";
+import "myproject/clickstream/v1/ImpressionEvent.proto";
+
+/**
+  This is a person entity.
+**/
+message User {
+  option(mycompany.mymetadata.v1.ownership.domain) = "Marketing";
+  option(mycompany.mymetadata.v1.ownership.team) = "Marketing";
+  option(mycompany.mymetadata.v1.ownership.team) = "Analytics";
+
+  option(mycompany.mymetadata.v1.message.type) = ENTITY;
+  option(mycompany.mymetadata.v1.security.classification_enum) = HighlyConfidential;
+
+  option(mycompany.mymetadata.v1.kafka.topics) = "users";
+  option(mycompany.mymetadata.v1.kafka.topics) = "clickstream_users";
+
+  int32 id = 1 [(mycompany.mymetadata.v1.datahubField.is_primary_key) = true];
+  string name = 2; // person's name
+  string email = 3 ; // email address
+
+  repeated Event recent_events = 4; // recent events
+}
+
+message Event {
+    oneof event {
+        // click interaction
+        Click click_event = 1;
+        // user impression event
+        Impression impression_event = 2;
+        // user search event
+        Search search_event = 3;
+    }
+}

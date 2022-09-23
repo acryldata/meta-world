@@ -1,0 +1,61 @@
+syntax = "proto3";
+package myproject.clickstream.v1;
+
+import "mycompany/mymetadata/v1/meta.proto";
+import "myproject/clickstream/v1/ClickEvent.proto";
+import "myproject/clickstream/v1/SearchEvent.proto";
+import "myproject/clickstream/v1/ImpressionEvent.proto";
+
+/**
+  Represents an internet browser.
+
+  Slack channel: #getting-started
+
+  Git owner: @datahub-project/johndoe
+
+  References:
+    https://en.wikipedia.org/wiki/Web_browser
+**/
+message Device {
+    option(mycompany.mymetadata.v1.ownership.domain) = "Marketing";
+    option(mycompany.mymetadata.v1.ownership.team) = "Analytics";
+    option(mycompany.mymetadata.v1.ownership.team) = "IT";
+    option(mycompany.mymetadata.v1.ownership.data_steward) = "corpUser:John Doe";
+
+    option(mycompany.mymetadata.v1.message.type) = ENTITY;
+
+    option(mycompany.mymetadata.v1.kafka.topics) = "devices";
+
+    // the device specific identifier
+    string device_id = 1 [(mycompany.mymetadata.v1.datahubField.is_primary_key) = true];
+
+    // the device type associated with this event
+    DeviceType device_type = 2;
+
+    // the user ids associated with this device
+    repeated string user_id = 3;
+
+    // device's user agent
+    // https://en.wikipedia.org/wiki/User_agent
+    string user_agent = 4;
+
+    // device's ip address
+    // https://en.wikipedia.org/wiki/IP_address
+    string ip_address = 5
+    [(mycompany.mymetadata.v1.securityField.classification) = "Classification.Sensitive"];
+
+    // Search history
+    repeated Search searches = 100;
+
+    // Impression history
+    repeated Impression impressions = 101;
+
+    // Click history
+     repeated Click clicks = 102;
+}
+
+enum DeviceType {
+    DESKTOP = 0;
+    MOBILE = 1;
+    TABLET = 2;
+}
